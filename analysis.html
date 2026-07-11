@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Analysis | Analyze Your Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="analysis">
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Back to upload page">
+          <span class="brand-mark">AR</span>
+          <span>
+            <strong>Analyze Your Resume</strong>
+            <small>ATS Analyzer</small>
+          </span>
+        </a>
+        <nav class="topnav">
+          <a href="index.html" class="topnav-link">Home</a>
+          <a href="analysis.html" class="topnav-link is-active">Analysis</a>
+        </nav>
+      </header>
+
+      <main class="analysis-page">
+        <section class="hero hero-analysis">
+          <div class="hero-copy compact">
+            <span class="eyebrow">Resume Analysis</span>
+            <h1>ATS Analyzer</h1>
+            <p>AI-powered insights and improvements for better ATS performance and recruiter clarity.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-chip">Overall ATS Score <strong id="overall-score-chip">--</strong></div>
+            <div class="stat-chip">Resume Sections <strong id="section-count-chip">--</strong></div>
+            <div class="stat-chip muted">Job Description <strong id="jd-status">No JD uploaded</strong></div>
+          </div>
+        </section>
+
+        <section class="dashboard-top">
+          <article class="panel score-panel">
+            <div class="panel-header">
+              <h2>ATS Score</h2>
+            </div>
+            <div class="score-ring is-main-score" id="score-ring">
+              <div class="score-inner">
+                <strong id="score-value">--</strong>
+                <span id="score-label">No analysis</span>
+              </div>
+            </div>
+            <p class="center-copy">Your resume rating is <strong>Good</strong></p>
+          </article>
+
+          <article class="panel readiness-panel">
+            <div class="panel-header">
+              <h2>AI Readiness Overview</h2>
+            </div>
+            <div class="readiness-hero">
+              <div class="readiness-orb">
+                <span id="readiness-score">--</span>
+                <small>Ready</small>
+              </div>
+              <div class="readiness-copy">
+                <span class="eyebrow">Smart scan</span>
+                <h3 id="readiness-title">Upload a resume to unlock insights</h3>
+                <p id="readiness-copy">Your resume signals, keywords, readability, skills, and quantified impact will appear here after analysis.</p>
+              </div>
+            </div>
+            <div class="readiness-grid" aria-label="AI readiness metrics">
+              <div class="readiness-metric">
+                <span>Keywords</span>
+                <strong id="overview-keywords">--</strong>
+                <div class="metric-track"><i id="overview-keywords-bar"></i></div>
+              </div>
+              <div class="readiness-metric">
+                <span>Skills</span>
+                <strong id="overview-skills">--</strong>
+                <div class="metric-track"><i id="overview-skills-bar"></i></div>
+              </div>
+              <div class="readiness-metric">
+                <span>Readability</span>
+                <strong id="overview-readability">--</strong>
+                <div class="metric-track"><i id="overview-readability-bar"></i></div>
+              </div>
+              <div class="readiness-metric">
+                <span>Impact</span>
+                <strong id="overview-impact">--</strong>
+                <div class="metric-track"><i id="overview-impact-bar"></i></div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="insight-switcher" aria-label="Analysis sections">
+          <button class="insight-tab is-active" type="button" data-tab-target="resume-analysis" aria-controls="resume-analysis">
+            <span class="tab-art tab-art-analysis"></span>
+            <span>
+              <strong>Resume Analysis</strong>
+              <small>Score breakdown</small>
+            </span>
+          </button>
+          <button class="insight-tab" type="button" data-tab-target="skills-balance" aria-controls="skills-balance">
+            <span class="tab-art tab-art-skills"></span>
+            <span>
+              <strong>Skills Balance</strong>
+              <small>Hard vs soft skills</small>
+            </span>
+          </button>
+          <button class="insight-tab" type="button" data-tab-target="job-match" aria-controls="job-match">
+            <span class="tab-art tab-art-match"></span>
+            <span>
+              <strong>Job Match</strong>
+              <small>JD alignment</small>
+            </span>
+          </button>
+          <button class="insight-tab" type="button" data-tab-target="recommendations" aria-controls="recommendations">
+            <span class="tab-art tab-art-recommend"></span>
+            <span>
+              <strong>Recommendations</strong>
+              <small>Next actions</small>
+            </span>
+          </button>
+        </section>
+
+        <section class="insight-stage">
+          <article class="panel analysis-summary insight-pane is-active" id="resume-analysis" data-insight-pane>
+            <div class="panel-header stacked">
+              <div>
+                <h2>Resume Analysis</h2>
+                <p>Quick Overview</p>
+              </div>
+              <span class="analysis-pill">AI ENHANCED</span>
+            </div>
+            <div class="summary-grid" id="summary-grid"></div>
+          </article>
+
+          <article class="panel insight-pane" id="skills-balance" data-insight-pane>
+            <div class="panel-header stacked">
+              <div>
+                <h2>Skills Balance</h2>
+                <p>Technical and soft skill mix</p>
+              </div>
+            </div>
+            <div class="skills-balance">
+              <div>
+                <div class="donut is-main-balance">
+                  <strong id="skills-balance-percent">--</strong>
+                </div>
+              </div>
+              <div>
+                <div class="skills-bars">
+                  <div><span>Hard Skills</span><strong id="hard-skill-count">-- hard skills</strong></div>
+                  <div><span>Soft Skills</span><strong id="soft-skill-count">-- soft skills</strong></div>
+                </div>
+                <div class="balance-tags">
+                  <span class="tag is-hard">Technical</span>
+                  <span class="tag is-soft">Soft skills</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-list" id="skill-list"></div>
+          </article>
+
+          <article class="panel insight-pane" id="job-match" data-insight-pane>
+            <div class="panel-header stacked">
+              <div>
+                <h2>Job Match</h2>
+                <p>Resume analysis and improvements</p>
+              </div>
+            </div>
+            <div class="job-match">
+              <div class="job-match-score">
+                <strong id="job-match-score">--</strong>
+                <span>ATS Score</span>
+              </div>
+              <div class="job-match-items" id="job-match-items"></div>
+            </div>
+          </article>
+
+          <article class="panel recommendations-panel insight-pane" id="recommendations" data-insight-pane>
+            <div class="panel-header stacked">
+              <div>
+                <h2>Improvement Recommendations</h2>
+                <p>Prioritized suggestions</p>
+              </div>
+            </div>
+            <div class="recommendation-list" id="recommendation-list"></div>
+          </article>
+        </section>
+
+        <section class="analysis-layout">
+          <article class="panel section-list">
+            <div class="panel-header stacked">
+              <div>
+                <h2>Resume Sections</h2>
+                <p>Sections detected in the resume</p>
+              </div>
+              <span class="analysis-pill muted">Analyzed</span>
+            </div>
+            <div class="section-pills" id="resume-sections"></div>
+            <div class="missing-box">
+              <h3>Missing Sections</h3>
+              <p>Certifications</p>
+              <small>If you have relevant certifications, include them to strengthen your qualifications.</small>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-header stacked">
+              <div>
+                <h2>Formatting Analysis</h2>
+                <p>Content flow and structure</p>
+              </div>
+            </div>
+            <div class="format-grid" id="format-grid"></div>
+          </article>
+        </section>
+
+        <section class="analysis-columns">
+          <article class="panel">
+            <div class="panel-header stacked">
+              <div>
+                <h2>Readability Analysis</h2>
+                <p>Language clarity and complexity</p>
+              </div>
+            </div>
+            <div class="readability-card">
+              <div class="readability-score">
+                <strong>40.0</strong>
+                <span>Difficult</span>
+              </div>
+              <div class="meter">
+                <span class="meter-fill is-main-readability"></span>
+              </div>
+              <p class="muted-copy">Your resume's readability level is Difficult. Consider simplifying your language for better results.</p>
+              <ul class="tips-list">
+                <li>Use shorter sentences</li>
+                <li>Choose simpler words where possible</li>
+                <li>Break up long paragraphs</li>
+              </ul>
+            </div>
+            <div class="complex-box">
+              <strong>Complex Words</strong>
+              <p>48 words, 25.5% of total words</p>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header stacked">
+              <div>
+                <h2>Achievements Analysis</h2>
+                <p>Quantified outcomes</p>
+              </div>
+            </div>
+            <div class="achievement-box">
+              <strong>0 achievements</strong>
+              <p>
+                Adding quantified achievements will strengthen your resume. Focus on metrics like percentage improvements, time savings, cost savings, and team sizes.
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <section class="analysis-columns full-width">
+          <article class="panel">
+            <div class="panel-header stacked">
+              <div>
+                <h2>Source Data</h2>
+                <p>Parsed text from the uploaded file and job description</p>
+              </div>
+            </div>
+            <div class="source-grid">
+              <div class="source-box">
+                <strong>Extracted Resume Preview</strong>
+                <p id="resume-preview">Upload a resume to see extracted text.</p>
+              </div>
+              <div class="source-box">
+                <strong>Job Description Preview</strong>
+                <p id="job-preview">Paste a job description to see matching context.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header stacked">
+              <div>
+                <h2>Keyword Match</h2>
+                <p>Matched and missing terms derived from the uploaded content</p>
+              </div>
+            </div>
+            <div class="keyword-clouds">
+              <div>
+                <strong>Matched Keywords</strong>
+                <div class="chip-row" id="matched-keywords"></div>
+              </div>
+              <div>
+                <strong>Missing Keywords</strong>
+                <div class="chip-row" id="missing-keywords"></div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="client.js"></script>
+  </body>
+</html>

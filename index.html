@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analyze Your Resume | ATS Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="home">
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Analyze Your Resume home">
+          <span class="brand-mark">AR</span>
+          <span>
+            <strong>Analyze Your Resume</strong>
+            <small>ATS Analyzer</small>
+          </span>
+        </a>
+        <nav class="topnav">
+          <a href="index.html" class="topnav-link is-active">Home</a>
+          <a href="analysis.html" class="topnav-link">Analysis</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero hero-home">
+          <div class="hero-copy">
+            <span class="eyebrow">Resume analysis made simple</span>
+            <h1>ATS Analyzer</h1>
+            <p>
+              Upload your resume and paste a job description to see how well your resume performs against Applicant Tracking Systems.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="analysis.html">View Demo Analysis</a>
+              <button class="btn btn-secondary" type="button" id="quick-analyze-btn">Analyze Uploaded Resume</button>
+            </div>
+            <div class="feature-pills" aria-label="Highlights">
+              <span><span class="pill-dot"></span>ATS score in seconds</span>
+              <span><span class="pill-dot"></span>Skills and readability breakdown</span>
+              <span><span class="pill-dot"></span>Blue, white, purple modern UI</span>
+            </div>
+          </div>
+
+          <div class="upload-panel">
+            <div class="panel-header">
+              <div>
+                <span class="eyebrow">Resume Upload</span>
+                <h2>Select from your resumes</h2>
+              </div>
+              <div class="mini-badge">PDF, DOC, DOCX</div>
+            </div>
+
+            <label class="dropzone" for="resume-file">
+              <input id="resume-file" type="file" accept=".pdf,.doc,.docx" />
+              <span class="dropzone-icon" aria-hidden="true">⬆</span>
+              <strong>Drop your resume here</strong>
+              <span>or click to browse files</span>
+              <small>Supports PDF, DOC, DOCX (Max 5MB)</small>
+            </label>
+
+            <div class="upload-meta">
+              <div>
+                <span class="meta-label">Selected file</span>
+                <strong id="selected-file">No file selected</strong>
+              </div>
+              <button class="btn btn-primary btn-wide" type="button" id="upload-analyze-btn">Analyze Now</button>
+            </div>
+
+            <p class="upload-status" id="upload-status" aria-live="polite"></p>
+
+            <div class="job-desc-panel">
+              <div class="panel-header compact-header">
+                <div>
+                  <span class="eyebrow">Job Description</span>
+                  <h2>Paste the role details</h2>
+                </div>
+              </div>
+              <textarea id="job-description" class="job-desc-field" rows="6" placeholder="Paste the job description here to improve keyword matching and scoring..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <article class="info-card tone-blue">
+            <div class="card-icon">⚡</div>
+            <h3>Fast ATS Match</h3>
+            <p>Quickly compare your resume against a job description and see where your profile is strong or missing signals.</p>
+          </article>
+          <article class="info-card tone-purple">
+            <div class="card-icon">✦</div>
+            <h3>Clean Visual Feedback</h3>
+            <p>Score rings, radar charts, and section cards make the results easy to scan on desktop and mobile.</p>
+          </article>
+          <article class="info-card tone-white">
+            <div class="card-icon">◎</div>
+            <h3>Actionable Guidance</h3>
+            <p>Get recommendations for achievements, keywords, readability, formatting, and missing sections.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="client.js"></script>
+  </body>
+</html>

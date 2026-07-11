@@ -1,0 +1,11 @@
+node_modules/
+.temp/
+server-smoke.out
+sample-resume.docx
+temp-sample/
+temp-sample-docx/
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
