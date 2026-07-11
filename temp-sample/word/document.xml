@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:r><w:t>John Doe</w:t></w:r></w:p>
+    <w:p><w:r><w:t>john.doe@email.com | 555-123-4567</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Professional Summary</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Frontend developer with 5 years of experience building React and TypeScript applications.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Experience</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Developed accessible interfaces, improved performance by 35%, and led API integration efforts.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Skills</w:t></w:r></w:p>
+    <w:p><w:r><w:t>React, TypeScript, JavaScript, HTML, CSS, Testing, Accessibility, API Integration</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Education</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Bachelor of Computer Science</w:t></w:r></w:p>
+    <w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr>
+  </w:body>
+</w:document>

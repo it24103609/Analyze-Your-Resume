@@ -1,17 +1,25 @@
 {
-  "name": "analyze-your-resume",
-  "version": "1.0.0",
+  "name": "temp_next",
+  "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "express": "^4.21.2",
-    "mammoth": "^1.8.0",
-    "multer": "^2.0.2",
-    "pdf-parse": "^1.1.1",
+    "jspdf": "^4.2.1",
+    "lucide-react": "^1.24.0",
+    "mammoth": "^1.12.0",
+    "next": "16.2.10",
+    "pdf-parse": "^2.4.5",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "word-extractor": "^1.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10"
   }
 }
