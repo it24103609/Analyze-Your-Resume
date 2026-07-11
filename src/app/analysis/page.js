@@ -3,23 +3,39 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { jsPDF } from 'jspdf';
+import { 
+  Search, BarChart2, Settings, Mail, FileText, Layout, Briefcase, Award, GraduationCap, Pencil, LayoutTemplate, PieChart, Target, Info, CheckCircle
+} from 'lucide-react';
 
-function Icon({ name, className = '' }) {
+function Icon({ name, className = '', title = '' }) {
+  // Try to match by title first for the summary cards to perfectly match the screenshot
+  const t = title.toLowerCase();
+  if (t.includes('contact')) return <Mail className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('summary')) return <FileText className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('section organization')) return <Settings className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('job titles')) return <Briefcase className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('skills')) return <Award className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('education')) return <GraduationCap className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('grammar') || t.includes('readability')) return <Pencil className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('quick overview')) return <BarChart2 className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+  if (t.includes('component analysis')) return <Settings className={`icon-inner ${className}`} size={18} strokeWidth={2} />;
+
+  // Fallback to name-based icons for general UI
   const icons = {
-    score: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 8 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M12 12l6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M17 4h3v3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-    sections: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a2 2 0 0 1 2 2v14H5V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    jd: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M8 9h8M8 13h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="m15 15 2 2 3-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-    summary: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15c4-8 12-8 16 0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    format: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h12M8 5v14M16 5v14M6 19h12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M10 10h4M10 14h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    skills: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7l7-4Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="m9 12 2 2 4-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-    readability: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5c2.4-1.4 5-1.4 8 0 3-1.4 5.6-1.4 8 0v12c-2.4-1.4-5-1.4-8 0-3-1.4-5.6-1.4-8 0v-12Z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 6.5v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    match: <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="m14 14 5 5M8 10l1.5 1.5L13 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-    recommend: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 20l7-4 7 4-7-17Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M12 3v13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    achievement: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M8 20h8M12 14v6M6 7H4a3 3 0 0 0 3 3M18 7h2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    source: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6V3Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M15 3v4h4M9 12h6M9 16h6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
-    keyword: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M8 5v14M16 5v14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
+    score: <Search size={18} strokeWidth={2.5} />,
+    sections: <LayoutTemplate size={18} strokeWidth={2.5} />,
+    jd: <Briefcase size={18} strokeWidth={2.5} />,
+    summary: <PieChart size={18} strokeWidth={2.5} />,
+    format: <Settings size={18} strokeWidth={2.5} />,
+    skills: <Award size={18} strokeWidth={2.5} />,
+    readability: <Pencil size={18} strokeWidth={2.5} />,
+    match: <Target size={18} strokeWidth={2.5} />,
+    recommend: <Info size={18} strokeWidth={2.5} />,
+    achievement: <CheckCircle size={18} strokeWidth={2.5} />,
+    source: <FileText size={18} strokeWidth={2.5} />,
+    keyword: <Search size={18} strokeWidth={2.5} />,
   };
-  return <span className={`icon-inner ${name} ${className}`}>{icons[name] || icons.score}</span>;
+  return <span className={`icon-inner ${className}`}>{icons[name] || icons.score}</span>;
 }
 
 export default function Analysis() {
@@ -276,7 +292,7 @@ export default function Analysis() {
             {data.summary?.length ? data.summary.map((item, i) => (
               <article key={i} className="summary-card">
                 <div className="summary-meta">
-                  <strong className="card-title"><span className="card-mini-icon"><Icon name="summary" /></span>{item.title}</strong>
+                  <strong className="card-title"><span className="card-mini-icon"><Icon name="summary" title={item.title} /></span>{item.title}</strong>
                   <span className="score-badge">{item.score}%</span>
                 </div>
                 <small>{item.note}</small>

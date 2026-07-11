@@ -1,30 +1,28 @@
 import { NextResponse } from 'next/server';
-const pdfParseLib = require('pdf-parse');
-const pdfParse = pdfParseLib.default || pdfParseLib;
-const mammoth = require('mammoth');
-const WordExtractor = require('word-extractor');
 import { summarizeSections, detectSections } from '@/lib/analyzer';
-const path = require('path');
-
-const extractor = new WordExtractor();
 
 async function extractResumeText(file) {
   const originalName = file.name || 'resume';
-  const extension = path.extname(originalName).toLowerCase();
+  const ext = originalName.split('.').pop().toLowerCase();
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  if (extension === '.pdf' || file.type === 'application/pdf') {
+  if (ext === 'pdf' || file.type === 'application/pdf') {
+    // Dynamic import avoids ESM/CJS mismatch at build time
+    const pdfParse = (await import('pdf-parse')).default;
     const result = await pdfParse(buffer);
     return { text: result.text || '', fileType: 'PDF' };
   }
 
-  if (extension === '.docx' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-    const result = await mammoth.extractRawText({ buffer: buffer });
+  if (ext === 'docx' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+    const mammoth = (await import('mammoth')).default;
+    const result = await mammoth.extractRawText({ buffer });
     return { text: result.value || '', fileType: 'DOCX' };
   }
 
-  if (extension === '.doc' || file.type === 'application/msword') {
+  if (ext === 'doc' || file.type === 'application/msword') {
+    const WordExtractor = (await import('word-extractor')).default;
+    const extractor = new WordExtractor();
     const doc = await extractor.extract(buffer);
     return { text: doc.getBody() || '', fileType: 'DOC' };
   }
@@ -43,7 +41,7 @@ export async function POST(req) {
     }
 
     const jobDescriptionText = typeof jobDescription === 'string' ? jobDescription.trim() : '';
-    
+
     const parsed = await extractResumeText(resumeFile);
     const result = summarizeSections(parsed.text, detectSections(parsed.text), jobDescriptionText);
 
@@ -55,6 +53,6 @@ export async function POST(req) {
     });
   } catch (error) {
     console.error('Analysis error:', error);
-    return NextResponse.json({ error: error.message || 'Failed to analyze resume.' }, { status: 400 });
+    return NextResponse.json({ error: error.message || 'Failed to analyze resume.' }, { status: 500 });
   }
 }
